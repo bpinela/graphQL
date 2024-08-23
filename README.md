@@ -1,3 +1,5 @@
-# GraphQL Study Projects
+# GraphQL Job Board
 
-This repository contains various projects centered around GraphQL, created for personal study purposes. The focus is on using Apollo Server, GraphQL-Request, and Apollo Client as GraphQL clients.
+This is a project used in the [GraphQL by Example](https://www.udemy.com/course/graphql-by-example/?referralCode=7ACEB04674F000BAC061) course.
+
+It uses Apollo Server with Express, and GraphQL-Request and Apollo Client as GraphQL clients. The application is used to explain queries, mutations, custom object types, authentication, etc.
