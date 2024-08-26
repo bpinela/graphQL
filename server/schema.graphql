@@ -1,0 +1,22 @@
+type Query {
+  jobs: [Job!]
+  job(id: ID!): Job
+  company(id: ID!): Company
+}
+
+# This is a regular comment
+type Job {
+  id: ID!
+  title: String!
+  description: String
+  """The __date__ when the job was published, in ISO-8601 format. E.g. `2024-08-23`."""
+  date: String
+  company: Company!
+}
+
+type Company {
+  id: ID!
+  name: String!
+  description: String
+  jobs: [Job!]!
+}
