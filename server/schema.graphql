@@ -4,6 +4,10 @@ type Query {
   company(id: ID!): Company
 }
 
+type Mutation {
+  createJob(input: CreateJobInput!): Job
+}
+
 # This is a regular comment
 type Job {
   id: ID!
@@ -19,4 +23,9 @@ type Company {
   name: String!
   description: String
   jobs: [Job!]!
+}
+
+input CreateJobInput {
+  title: String!
+  description: String
 }
