@@ -6,6 +6,8 @@ type Query {
 
 type Mutation {
   createJob(input: CreateJobInput!): Job
+  deleteJob(id: ID!): Job
+  updateJob(input: UpdateJobInput!): Job
 }
 
 # This is a regular comment
@@ -26,6 +28,12 @@ type Company {
 }
 
 input CreateJobInput {
+  title: String!
+  description: String
+}
+
+input UpdateJobInput {
+  id: ID!
   title: String!
   description: String
 }
