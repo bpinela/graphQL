@@ -23,7 +23,10 @@ export const resolvers = {
   },
 
   Mutation: {
-    createJob: (_root, { input: {title, description} }) => {
+    createJob: (_root, { input: {title, description} }, {auth}) => {
+      if (!auth) {
+        throw unathorizedError('Missing Authentication')
+      }
       const companyId = "FjcJCHJALA4i"
       return createJob({companyId, title, description})
     },
@@ -54,8 +57,11 @@ export const resolvers = {
 };
 
 const notFoundError = (message) => {
-  return new GraphQLError(message, { extensions: { code: "NOT_FOUND" }})
-        
+  return new GraphQLError(message, { extensions: { code: "NOT_FOUND" }})  
+}
+
+const unathorizedError = (message) => {
+  return new GraphQLError(message, { extensions: { code: "UNANTHORIZED" }})  
 }
 
 const toISODate = (value) => {
