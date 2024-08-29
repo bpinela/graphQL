@@ -1,4 +1,3 @@
-import { GraphQLClient } from 'graphql-request';
 import { getAccessToken } from '../auth';
 import { ApolloClient, ApolloLink, concat, createHttpLink, gql, InMemoryCache} from '@apollo/client';
 
@@ -36,9 +35,8 @@ const apolloClient = new ApolloClient({
   }
 })
 
-const jobByIdQuery = gql`
-  query JobById($id: ID!) {
-    job(id: $id) {
+const jobDetailFragment = gql`
+  fragment JobDetail on Job {
       id
       title
       description
@@ -47,8 +45,17 @@ const jobByIdQuery = gql`
         id
         name
       }
+  }
+`
+
+const jobByIdQuery = gql`
+  query JobById($id: ID!) {
+    job(id: $id) {
+      ...JobDetail
     }
-  }`;
+  }
+  ${jobDetailFragment}
+`;
 
 export async function getJobs() {
   const query = gql`
@@ -102,16 +109,10 @@ export async function createJob({ title, description}) {
   const mutation = gql`
     mutation($input: CreateJobInput!) {
       job: createJob(input: $input) {
-        id
-        title
-        description
-        date
-        company {
-          id
-          name
-        }
+        ...JobDetail
       }
     }
+    ${jobDetailFragment}
   `;
 
   const { data } = await apolloClient.mutate({
