@@ -1,7 +1,7 @@
 import { getJobs, getJob, getJobsByCompany, createJob, deleteJob, updateJob } from './db/jobs.js';
 import { getCompany } from './db/companies.js';
 import { GraphQLError } from 'graphql';
-
+import { companyLoader } from './db/companies.js';  
 
 export const resolvers = {
   Query: {
@@ -14,7 +14,7 @@ export const resolvers = {
       return job
     },
     company: async (_root, {id}) => {
-      const company = await getCompany(id)
+      const company = await companyLoader.load(id)
       if (!company) {
         throw notFoundError(`No company found with id ${id}`);
       }
